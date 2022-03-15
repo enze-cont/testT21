@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="css/cover.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/echarts/5.3.1/echarts.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="js/dark.js"></script>
+    <script th:inline="javascript">
+        var msg = [[${rubbishCollection}]];
+        var length = msg.length;
+        var years = new Array(length);
+        var collectedWeight = new Array(length);
+        var recycledWeight = new Array(length);
+        for (var i = 0; i < length; i++) {
+            var currentData = msg[i];
+            years[i] = currentData.year;
+            collectedWeight[i] = currentData.collectedWeight;
+            recycledWeight[i] = currentData.sortedWeight;
+        }
+        console.info(collectedWeight);
+        console.info(recycledWeight);
+    </script>
+</head>
+
+<body>
+<div class="d-flex h-100 text-white bg-dark bg-gradient">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="mb-auto" style="height: 150px">
+            <div>
+                <h3 class="float-md-start mb-0">Rubbish Collection Tool</h3>
+                <nav class="nav nav-masthead justify-content-center float-md-end">
+                    <a class="nav-link" href="/home">Home</a>
+                    <a class="nav-link active" aria-current="page" href="/introduction">Introduction</a>
+                    <a class="nav-link" href="/classficationTool">Classfication Tool</a>
+                </nav>
+            </div>
+        </header>
+        <h1>Introduction</h1>
+        <!-- Basic -->
+        <div class="ex-basic-1 pt-5 pb-5">
+            <div class="container">
+                <div class="row">
+                    <h5>This web application serves the function of waste categorization and binning by searching the
+                        products that users are keen to know. The database from the local waste management has been used
+                        to recognize which thresh bins the waste belongs. This website helps many users confused with
+                        the types of categorizations practices that work according to the local authority policy.</h5>
+                    <h1>&nbsp;</h1>
+                    <h2 class="mt-5 mb-3">1. Why sort rubbish is important?</h2>
+                    <div id="main" style="width: 900px;height:500px"></div>
+                    <h1>&nbsp;</h1>
+                    <p class="mb-5">From the Graph above you can see that, collected rubbish in Victoria has been
+                        increasing from 2001 to 2019. Although the weight of recycled rubbish continues to grow, the
+                        recycling rate has not increased significantly and did not exceed 50% in 2019. This problem may
+                        cause many environmental pollution and waste of land resources. Therefore, we must improve the
+                        public's concept of environmental protection and improve the utilization rate of renewable
+                        resources.</p>
+
+                    <h2 class="mb-3">2. How our tools help you sort rubbish?</h2>
+                    <p>Whether you have just arrived in Victoria or have lived in Victoria for many years, our tools
+                        will help you when you don't know how to sort your trash correctly. Just type the name of the
+                        garbage you want to search into the input box, you will be able to see which bin should the
+                        garbage go.</p>
+
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+        </div> <!-- end of ex-basic-1 -->
+        <!-- end of basic -->
+
+        <footer class="mt-auto text-white-50 text-center">
+            <p>Team 21</p>
+            <p>Onboard</p>
+        </footer>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    /*<![CDATA[*/
+    var chartDom = document.getElementById('main');
+    var myChart = echarts.init(chartDom, 'dark');
+    var option;
+
+    option = {
+        title: {
+            text: 'Rubbish Collection VIC'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['Collected Rubbish', 'Recycled Rubbish'],
+            right: '15%'
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: years
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                name: 'Collected Rubbish',
+                type: 'line',
+                data: collectedWeight
+            },
+            {
+                name: 'Recycled Rubbish',
+                type: 'line',
+                data: recycledWeight
+            }
+        ]
+    };
+    option && myChart.setOption(option);
+    /*]]>*/
+</script>
+</html>

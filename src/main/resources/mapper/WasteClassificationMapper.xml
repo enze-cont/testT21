@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="monash.ie.team21.onboard.mapper.WasteClassificationMapper" >
+  <resultMap id="BaseResultMap" type="monash.ie.team21.onboard.entity.WasteClassification" >
+    <id column="waste_id" property="wasteId" jdbcType="INTEGER" />
+    <result column="waste_name" property="wasteName" jdbcType="CHAR" />
+    <result column="waste_type" property="wasteType" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    waste_id, waste_name, waste_type
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="monash.ie.team21.onboard.entity.WasteClassificationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from waste_classification
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from waste_classification
+    where waste_id = #{wasteId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from waste_classification
+    where waste_id = #{wasteId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="monash.ie.team21.onboard.entity.WasteClassificationExample" >
+    delete from waste_classification
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="monash.ie.team21.onboard.entity.WasteClassification" >
+    insert into waste_classification (waste_id, waste_name, waste_type
+      )
+    values (#{wasteId,jdbcType=INTEGER}, #{wasteName,jdbcType=CHAR}, #{wasteType,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="monash.ie.team21.onboard.entity.WasteClassification" >
+    insert into waste_classification
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wasteId != null" >
+        waste_id,
+      </if>
+      <if test="wasteName != null" >
+        waste_name,
+      </if>
+      <if test="wasteType != null" >
+        waste_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wasteId != null" >
+        #{wasteId,jdbcType=INTEGER},
+      </if>
+      <if test="wasteName != null" >
+        #{wasteName,jdbcType=CHAR},
+      </if>
+      <if test="wasteType != null" >
+        #{wasteType,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="monash.ie.team21.onboard.entity.WasteClassificationExample" resultType="java.lang.Integer" >
+    select count(*) from waste_classification
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update waste_classification
+    <set >
+      <if test="record.wasteId != null" >
+        waste_id = #{record.wasteId,jdbcType=INTEGER},
+      </if>
+      <if test="record.wasteName != null" >
+        waste_name = #{record.wasteName,jdbcType=CHAR},
+      </if>
+      <if test="record.wasteType != null" >
+        waste_type = #{record.wasteType,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update waste_classification
+    set waste_id = #{record.wasteId,jdbcType=INTEGER},
+      waste_name = #{record.wasteName,jdbcType=CHAR},
+      waste_type = #{record.wasteType,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="monash.ie.team21.onboard.entity.WasteClassification" >
+    update waste_classification
+    <set >
+      <if test="wasteName != null" >
+        waste_name = #{wasteName,jdbcType=CHAR},
+      </if>
+      <if test="wasteType != null" >
+        waste_type = #{wasteType,jdbcType=CHAR},
+      </if>
+    </set>
+    where waste_id = #{wasteId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="monash.ie.team21.onboard.entity.WasteClassification" >
+    update waste_classification
+    set waste_name = #{wasteName,jdbcType=CHAR},
+      waste_type = #{wasteType,jdbcType=CHAR}
+    where waste_id = #{wasteId,jdbcType=INTEGER}
+  </update>
+</mapper>
